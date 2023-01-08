@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 from .models import Post
 # Create your views here.
 class indexView(TemplateView):
@@ -10,3 +10,6 @@ class indexView(TemplateView):
         context['name'] = 'Tahmine Aminzade'
         context ['test'] = Post.objects.all()
         return context
+
+class RedirectToGoogle(RedirectView):
+    url = 'https://google.com/'

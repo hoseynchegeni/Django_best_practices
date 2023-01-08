@@ -25,4 +25,4 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser = True'))
 
-        return self.create_user(email, password, **extra_fields)   # مجدد فرستادیم به تابع بالایی فقط با این تفاوت که دیگه مقادیر سوپر یوزرمون فالس نیست
+        return self.create_user(email, password, **extra_fields) 

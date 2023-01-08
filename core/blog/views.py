@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, RedirectView
 from .models import Post
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView,FormView
+from .forms import PostFrom
 # Create your views here.
 class indexView(TemplateView):
     template_name  = 'index.html'
@@ -31,3 +32,12 @@ class PostList(ListView):
 class PostDetailView(DetailView):
     model  = Post
 
+
+class PostCreate(FormView):
+    template_name = 'blog/contact.html'
+    form_class = PostFrom 
+    success_url = '/blog/post/'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

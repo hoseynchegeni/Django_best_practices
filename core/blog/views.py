@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from .models import Post
 from django.views.generic import ListView, DetailView,FormView, CreateView, UpdateView, DeleteView
 from .forms import PostFrom
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 # Create your views here.
 class indexView(TemplateView):
     template_name  = 'index.html'
@@ -19,8 +19,9 @@ class RedirectToGoogle(RedirectView):
 
 
 
-class PostList(LoginRequiredMixin,ListView):
+class PostList(PermissionRequiredMixin,LoginRequiredMixin,ListView):
     # model = Post
+    permission_required = 'blog.view_post'
     queryset = Post.objects.all()   
     # def get_queryset(self):
     #     posts = Post.objects.filter(status = True)  

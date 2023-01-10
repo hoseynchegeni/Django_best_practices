@@ -16,5 +16,6 @@
         {{object.content}}
     </P>
     <small>{{object.author}}, {{object.published_date}}</small>
+    <a href="{% url 'blog:edit' pk=post.id %}">Edit</a>
 </body>
 </html>

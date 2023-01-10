@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, RedirectView
 from .models import Post
-from django.views.generic import ListView, DetailView,FormView, CreateView
+from django.views.generic import ListView, DetailView,FormView, CreateView, UpdateView
 from .forms import PostFrom
 # Create your views here.
 class indexView(TemplateView):
@@ -24,7 +24,7 @@ class PostList(ListView):
     # def get_queryset(self):
     #     posts = Post.objects.filter(status = True)  
     #     return posts
-    paginate_by = 2
+    paginate_by = 5
     # ordering = '-title'
     context_object_name = 'posts'
 
@@ -52,3 +52,9 @@ class PostCreate(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostEditView(UpdateView):
+    model = Post
+    form_class = PostFrom
+    success_url = '/blog/post/'

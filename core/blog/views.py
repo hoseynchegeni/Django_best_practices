@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from accounts.models import Profile
 
 # Create your views here.
 class indexView(TemplateView):
@@ -56,8 +57,11 @@ class PostCreate(LoginRequiredMixin,CreateView):
     success_url = '/blog/post/'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.author = Profile.objects.get(user = self.request.user)
         return super().form_valid(form)
+
+        
+
 
 
 class PostEditView(LoginRequiredMixin, UpdateView):

@@ -24,7 +24,7 @@ def PostList(request):
         return Response(serializer.data)
 
 
-@api_view(['GET','PUT'])
+@api_view(['GET','PUT','DELETE'])
 def postDetail(request, id):
     # try:
     #     post = Post.objects.get(pk = id)
@@ -43,4 +43,7 @@ def postDetail(request, id):
         serializer.is_valid(raise_exception= True)
         serializer.save()
         return Response(serializer.data)
+    elif request.method == 'DELETE':
+        post.delete()
+        return Response({'detail':'Item removed successfully'})
 

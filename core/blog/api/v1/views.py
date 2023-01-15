@@ -6,6 +6,13 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 @api_view()
+def PostList(request):
+    posts = Post.objects.all()
+    serializer = PostSerializer(posts, many = True)
+    return Response(serializer.data)
+
+
+@api_view()
 def postDetail(request, id):
     # try:
     #     post = Post.objects.get(pk = id)

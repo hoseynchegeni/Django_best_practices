@@ -1,2 +1,2 @@
-# dev
+# DJANGO BEST PRACTICES
  

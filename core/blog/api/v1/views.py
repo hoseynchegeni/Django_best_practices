@@ -28,7 +28,8 @@ def PostList(request):
 """
 
 class PostList(APIView):
-
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
     def get(self, request):
         posts = Post.objects.filter(status  = True)
         serializer = PostSerializer(posts, many = True)
@@ -40,7 +41,7 @@ class PostList(APIView):
         serializer.save()
         return Response(serializer.data)
 
-        
+
 
 @api_view(['GET','PUT','DELETE'])
 @permission_classes([IsAuthenticatedOrReadOnly])

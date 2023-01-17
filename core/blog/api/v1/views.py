@@ -6,6 +6,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
+
 
 """@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -27,7 +29,7 @@ def PostList(request):
         return Response(serializer.data)
 """
 
-class PostList(APIView):
+'''class PostList(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     def get(self, request):
@@ -39,8 +41,22 @@ class PostList(APIView):
         serializer = PostSerializer(data = request.data)
         serializer.is_valid(raise_exception= True)
         serializer.save()
+        return Response(serializer.data)'''
+
+class PostList(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status = True)
+    def get(self, request):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many = True)
         return Response(serializer.data)
 
+    def post(self, request):
+        serializer = self.serializer_class(data = request.data)
+        serializer.is_valid(raise_exception= True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 '''@api_view(['GET','PUT','DELETE'])

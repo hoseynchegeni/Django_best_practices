@@ -6,7 +6,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView
 from rest_framework import mixins
 
 api_view(['GET', 'POST'])
@@ -43,7 +43,7 @@ class PostListApiView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+class PostList(ListAPIView, CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status = True)

@@ -7,11 +7,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
+from rest_framework import mixins
 
-
-"""@api_view(['GET', 'POST'])
+api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def PostList(request):
+def PostListFunctionBase(request):
     if request.method == 'GET':
         # posts = Post.objects.all()
         posts = Post.objects.filter(status  = True)
@@ -27,9 +27,9 @@ def PostList(request):
         serializer.is_valid(raise_exception= True)
         serializer.save()
         return Response(serializer.data)
-"""
 
-'''class PostList(APIView):
+
+class PostListApiView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     def get(self, request):
@@ -41,27 +41,22 @@ def PostList(request):
         serializer = PostSerializer(data = request.data)
         serializer.is_valid(raise_exception= True)
         serializer.save()
-        return Response(serializer.data)'''
+        return Response(serializer.data)
 
-class PostList(GenericAPIView):
+class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status = True)
-    def get(self, request):
-        queryset = self.get_queryset()
-        serializer = self.serializer_class(queryset, many = True)
-        return Response(serializer.data)
 
-    def post(self, request):
-        serializer = self.serializer_class(data = request.data)
-        serializer.is_valid(raise_exception= True)
-        serializer.save()
-        return Response(serializer.data)
+    def get(self, request, *args, **kwargs):
+        return self.list (request,*args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request,*args, **kwargs)
 
-
-'''@api_view(['GET','PUT','DELETE'])
+@api_view(['GET','PUT','DELETE'])
 @permission_classes([IsAuthenticatedOrReadOnly])
-def postDetail(request, id):
+def postDetailFunctionBase(request, id):
     # try:
     #     post = Post.objects.get(pk = id)
     #     serializer =  PostSerializer(post)
@@ -82,7 +77,7 @@ def postDetail(request, id):
     elif request.method == 'DELETE':
         post.delete()
         return Response({'detail':'Item removed successfully'})
-'''
+
 
 
 class PostDetail(APIView):

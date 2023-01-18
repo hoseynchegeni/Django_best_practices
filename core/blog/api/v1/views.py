@@ -2,12 +2,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from ...models import Post
-from rest_framework import status
+from rest_framework import status, mixins, viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView,RetrieveUpdateDestroyAPIView
-from rest_framework import mixins
+
 
 api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -110,3 +110,37 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
 
     
+
+class PostViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status = True)
+    lookup_field = 'id'
+
+    def list(self, request):
+        serializer = self.serializer_class(self.queryset, many = True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk = None):
+        PostObj = get_object_or_404(self.queryset, pk = pk)
+        serializer = self.serializer_class(PostObj)
+        return Response(serializer.data)
+        
+    def create(self, request): 
+        serializer = self.serializer_class(data = request.data)
+        serializer.is_valid(raise_exception= True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        post = get_object_or_404(Post ,pk = pk)
+        serializer = self.serializer_class(post, data= request.data)
+        serializer.is_valid(raise_exception= True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+    def destroy(self, request, pk):
+        post = get_object_or_404(Post ,pk = pk)
+        post.delete()
+        return Response({'detail':'Item removed successfully'})

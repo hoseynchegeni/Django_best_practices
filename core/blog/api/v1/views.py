@@ -6,7 +6,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework import mixins
 
 api_view(['GET', 'POST'])
@@ -80,7 +80,7 @@ def postDetailFunctionBase(request, id):
 
 
 
-class PostDetail(APIView):
+class PostDetailOld(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
 
@@ -101,3 +101,12 @@ class PostDetail(APIView):
         post = get_object_or_404(Post ,pk = id)
         post.delete()
         return Response({'detail':'Item removed successfully'})
+    
+class PostDetail(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status = True)
+    lookup_field = 'id' # Or path('post/<int:pk>/', PostDetail.as_view(), name= 'post_detail'),
+
+
+    

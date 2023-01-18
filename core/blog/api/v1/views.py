@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import PostSerializer
-from ...models import Post
+from .serializers import PostSerializer, CategorySerializer
+from ...models import Post, Category
 from rest_framework import status, mixins, viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
@@ -111,7 +111,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
     
 
-class PostViewSet(viewsets.ViewSet):
+class PostViewSetOld(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status = True)
@@ -144,3 +144,14 @@ class PostViewSet(viewsets.ViewSet):
         post = get_object_or_404(Post ,pk = pk)
         post.delete()
         return Response({'detail':'Item removed successfully'})
+    
+
+class PostViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status = True)
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()

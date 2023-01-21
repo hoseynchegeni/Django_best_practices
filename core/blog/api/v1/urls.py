@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import PostList, PostDetail, PostViewSet, CategoryViewSet
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import DefaultRouter, SimpleRouter
 
 app_name = 'api-v1'
 

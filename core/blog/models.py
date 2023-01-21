@@ -17,12 +17,10 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now= True)
     published_date = models.DateTimeField()
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title
     
-    def get_snippet(self):
-        return self.content[0:5]
-    
+
     def get_absolute_api_url(self):
         return reverse ('blog:api_v1:post-detail', kwargs = {"pk" : self.pk})
 

@@ -24,7 +24,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('apu-auth/',include('rest_framework.urls')),
-    # path('api-docs/',include_docs_urls(title='api-sample')),
+    path('api-docs/',include_docs_urls(title='api-sample')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView,RetrieveUpdateDestroyAPIView
-
+from .permissions import IsAuthorOrReadOnly
 
 api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -147,7 +147,7 @@ class PostViewSetOld(viewsets.ViewSet):
     
 
 class PostViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status = True)
 

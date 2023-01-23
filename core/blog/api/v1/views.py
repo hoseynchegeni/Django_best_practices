@@ -8,6 +8,8 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView,RetrieveUpdateDestroyAPIView
 from .permissions import IsAuthorOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -150,6 +152,8 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status = True)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'author']
 
     @action(methods=['get'], detail= False)
     def get_ok(self, request):

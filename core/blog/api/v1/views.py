@@ -154,7 +154,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status = True)
     filter_backends = [DjangoFilterBackend,SearchFilter, OrderingFilter]
-    filterset_fields = ['category', 'author']
+    filterset_fields = {'category':['exact','in'], 'author':['exact'],'status':['exact'],'published_date':['lt','gt']}
     search_fields = ['title','content']
     ordering_fields = ['published_date']
     pagination_class =  LargeResultSetPagination

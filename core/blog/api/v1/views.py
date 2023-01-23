@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from .serializers import PostSerializer, CategorySerializer
 from ...models import Post, Category
-from rest_framework import status, mixins, viewsets
+from rest_framework import status, mixins, viewsets 
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
@@ -10,6 +10,7 @@ from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView,R
 from .permissions import IsAuthorOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from .paginations import LargeResultSetPagination
 
 api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -156,6 +157,7 @@ class PostViewSet(viewsets.ModelViewSet):
     filterset_fields = ['category', 'author']
     search_fields = ['title','content']
     ordering_fields = ['published_date']
+    pagination_class =  LargeResultSetPagination
 
     @action(methods=['get'], detail= False)
     def get_ok(self, request):
@@ -165,3 +167,5 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+

@@ -10,7 +10,7 @@ from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView,R
 from .permissions import IsAuthorOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from .paginations import LargeResultSetPagination
+from . pagination import LargeResultSetPagination
 
 api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])

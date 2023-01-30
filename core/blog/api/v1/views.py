@@ -4,7 +4,10 @@ from .serializers import PostSerializer, CategorySerializer
 from ...models import Post, Category
 from rest_framework import status, mixins, viewsets
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.views import APIView
 from rest_framework.generics import (
     GenericAPIView,
@@ -119,9 +122,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
-    lookup_field = (
-        "id"  # Or path('post/<int:pk>/', PostDetail.as_view(), name= 'post_detail'),
-    )
+    lookup_field = "id"  # Or path('post/<int:pk>/', PostDetail.as_view(), name= 'post_detail'),
 
 
 class PostViewSetOld(viewsets.ViewSet):

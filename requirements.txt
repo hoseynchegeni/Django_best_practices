@@ -12,3 +12,7 @@ django-filter
 drf-yasg[validation]
 
 #Deployment Modules
+
+# Refactoring and tests
+black
+flake8

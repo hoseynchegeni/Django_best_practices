@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ("email", "is_staff", "is_active")
+    list_display = ("email", "is_staff", "is_active", "is_verified")
     list_filter = ("email", "is_staff", "is_active")
     search_fields = ("email",)
     ordering = ("email",)
@@ -14,7 +14,7 @@ class CustomUserAdmin(UserAdmin):
         ("Authentication", {"fields": ("email", "password")}),
         (
             "Permissions",
-            {"fields": ("is_staff", "is_superuser", "is_active")},
+            {"fields": ("is_staff", "is_superuser", "is_active", "is_verified")},
         ),
         (
             "Group permissions",
@@ -39,6 +39,7 @@ class CustomUserAdmin(UserAdmin):
                     "is_staff",
                     "is_superuser",
                     "is_active",
+                    'is_verified',
                 ),
             },
         ),

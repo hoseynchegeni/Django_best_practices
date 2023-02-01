@@ -122,7 +122,9 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
-    lookup_field = "id"  # Or path('post/<int:pk>/', PostDetail.as_view(), name= 'post_detail'),
+    lookup_field = (
+        "id"  # Or path('post/<int:pk>/', PostDetail.as_view(), name= 'post_detail'),
+    )
 
 
 class PostViewSetOld(viewsets.ViewSet):

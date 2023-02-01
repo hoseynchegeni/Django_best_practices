@@ -15,7 +15,6 @@ from django.contrib.auth import get_user_model
 from ....models import Profile
 
 
-
 User = get_user_model()
 
 
@@ -41,9 +40,7 @@ class CustomAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        return Response(
-            {"token": token.key, "user_id": user.pk, "email": user.email}
-        )
+        return Response({"token": token.key, "user_id": user.pk, "email": user.email})
 
 
 class CustomDiscardAuthToken(APIView):
@@ -67,9 +64,7 @@ class ChangePasswordView(GenericAPIView):
         self.object = self.get_object()
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            if not self.object.check_password(
-                serializer.data.get("old_password")
-            ):
+            if not self.object.check_password(serializer.data.get("old_password")):
                 return Response(
                     {"old_password": ["Wrong Password."]},
                     status=status.HTTP_400_BAD_REQUEST,

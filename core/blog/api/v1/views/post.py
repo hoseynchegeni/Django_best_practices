@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
-from .serializers import PostSerializer, CategorySerializer
-from ...models import Post, Category
-from rest_framework import status, mixins, viewsets
+from ..serializers import PostSerializer
+from ....models import Post
+from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import (
     IsAuthenticated,
@@ -10,7 +10,6 @@ from rest_framework.permissions import (
 )
 from rest_framework.views import APIView
 from rest_framework.generics import (
-    GenericAPIView,
     ListAPIView,
     CreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -181,7 +180,3 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response({"detail": "ok"})
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()

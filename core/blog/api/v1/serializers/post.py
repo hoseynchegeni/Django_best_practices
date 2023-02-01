@@ -1,15 +1,7 @@
 from rest_framework import serializers
-from ...models import Post, Category
+from ....models import Post, Category
 from accounts.models import Profile
-
-
-# class PostSerializer(serializers.Serializer):
-#     id = serializers.IntegerField()
-#     title = serializers.CharField(max_length = 255)
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = "__all__"
+from .category import CategorySerializer
 
 
 class PostSerializer(serializers.ModelSerializer):

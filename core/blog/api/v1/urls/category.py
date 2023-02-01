@@ -5,4 +5,3 @@ router = DefaultRouter()
 
 router.register("category", CategoryViewSet, basename="category")
 urlpatterns = router.urls
-

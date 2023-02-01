@@ -178,5 +178,3 @@ class PostViewSet(viewsets.ModelViewSet):
     @action(methods=["get"], detail=False)
     def get_ok(self, request):
         return Response({"detail": "ok"})
-
-

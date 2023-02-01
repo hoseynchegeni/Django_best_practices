@@ -1,10 +1,9 @@
-from ..serializers import  CategorySerializer
-from ....models import  Category
+from ..serializers import CategorySerializer
+from ....models import Category
 from rest_framework import viewsets
 
 from rest_framework.permissions import (
     IsAuthenticated,
-
 )
 
 

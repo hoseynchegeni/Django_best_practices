@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, RedirectView
-from .models import Post
+from ..models import Post
 from django.views.generic import (
     ListView,
     DetailView,
@@ -9,7 +9,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .forms import PostFrom
+from ..forms import PostFrom
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
@@ -30,10 +30,6 @@ class indexView(TemplateView):
         return context
 
 
-class RedirectToGoogle(RedirectView):
-    url = "https://google.com/"
-
-
 class PostList(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     # model = Post
     permission_required = "blog.view_post"
@@ -48,18 +44,6 @@ class PostList(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
-
-
-"""
-class PostCreate(FormView):
-    template_name = 'blog/contact.html'
-    form_class = PostFrom 
-    success_url = '/blog/post/'
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-"""
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
@@ -81,8 +65,3 @@ class PostEditView(LoginRequiredMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = "/blog/post/"
-
-
-@api_view()
-def ApiView(request):
-    return Response("Ok")

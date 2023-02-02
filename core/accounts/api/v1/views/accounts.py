@@ -11,8 +11,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
-from mail_templated import send_mail
-
+from mail_templated import send_mail, EmailMessage
+from ..utils import EmailThread
 
 User = get_user_model()
 
@@ -80,5 +80,6 @@ class ChangePasswordView(GenericAPIView):
 
 class TestSendMail(GenericAPIView):
     def get(self, request, *args, **kwargs):
-        send_mail('email/hello.tpl', {'name':'hoseyn'},'admin@admin.com', ['hoseyn@admain.com'])
+        email_obj = EmailMessage('email/hello.tpl', {'name':'hoseyn'},'admin@admin.com', ['hoseyn@admain.com'])
+        EmailThread(email_obj).start()
         return Response('Email sent')

@@ -10,6 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         many=False, slug_field="name", queryset=Category.objects.all()
     )
+
     # category = CategorySerializer()
     class Meta:
         model = Post

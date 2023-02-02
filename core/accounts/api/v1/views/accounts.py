@@ -29,14 +29,19 @@ class RegistrationApiView(GenericAPIView):
             # Send Activation mail
             email = serializer.validated_data["email"]
             data = {"email": email}
-            user_obj = get_object_or_404(User, email = email)
+            user_obj = get_object_or_404(User, email=email)
             token = self.get_token_for_user(user_obj)
-            email_obj = EmailMessage('email/activation_email.tpl', {'token':token},'admin@admin.com', to = [email])
+            email_obj = EmailMessage(
+                "email/activation_email.tpl",
+                {"token": token},
+                "admin@admin.com",
+                to=[email],
+            )
             EmailThread(email_obj).start()
 
             return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def get_token_for_user(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
@@ -89,23 +94,24 @@ class ChangePasswordView(GenericAPIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class TestSendMail(GenericAPIView):
     def get(self, request, *args, **kwargs):
-        self.email = 'hoseyn@admin.com'
-        user_obj = get_object_or_404(User, email = self.email)
+        self.email = "hoseyn@admin.com"
+        user_obj = get_object_or_404(User, email=self.email)
         token = self.get_token_for_user(user_obj)
-        email_obj = EmailMessage('email/hello.tpl', {'token':token},'admin@admin.com', to = [self.email])
+        email_obj = EmailMessage(
+            "email/hello.tpl", {"token": token}, "admin@admin.com", to=[self.email]
+        )
         EmailThread(email_obj).start()
-        return Response('Email sent')
+        return Response("Email sent")
 
     def get_token_for_user(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
-    
+
 
 class ActivationApiView(GenericAPIView):
     def get(self, request, *args, **kwargs):
-        
-        return Response('ok')
+        return Response("ok")

@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User, Profile
 from django.contrib.auth.forms import UserCreationForm
 
+
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = User
@@ -39,7 +40,7 @@ class CustomUserAdmin(UserAdmin):
                     "is_staff",
                     "is_superuser",
                     "is_active",
-                    'is_verified',
+                    "is_verified",
                 ),
             },
         ),

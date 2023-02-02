@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 
+
 class RegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(max_length=255, write_only=True)
 
@@ -56,7 +57,7 @@ class CustomAuthTokenSerializer(serializers.Serializer):
                 msg = _("Unable to log in with provided credentials.")
                 raise serializers.ValidationError(msg, code="authorization")
             if not user.verified:
-                raise serializers.ValidationError({'detail':'User is not verified'})
+                raise serializers.ValidationError({"detail": "User is not verified"})
         else:
             msg = _('Must include "username" and "password".')
             raise serializers.ValidationError(msg, code="authorization")

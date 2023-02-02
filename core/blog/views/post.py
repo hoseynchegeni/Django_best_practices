@@ -19,6 +19,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from accounts.models import Profile
 
+
 # Create your views here.
 class indexView(TemplateView):
     template_name = "index.html"

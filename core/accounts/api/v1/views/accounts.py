@@ -13,6 +13,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from mail_templated import send_mail, EmailMessage
 from ..utils import EmailThread
+from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
@@ -80,6 +82,13 @@ class ChangePasswordView(GenericAPIView):
 
 class TestSendMail(GenericAPIView):
     def get(self, request, *args, **kwargs):
-        email_obj = EmailMessage('email/hello.tpl', {'name':'hoseyn'},'admin@admin.com', ['hoseyn@admain.com'])
+        self.email = 'hoseyn@admin.com'
+        user_obj = get_object_or_404(User, email = self.email)
+        token = self.get_token_for_user(user_obj)
+        email_obj = EmailMessage('email/hello.tpl', {'token':token},'admin@admin.com', to = [self.email])
         EmailThread(email_obj).start()
         return Response('Email sent')
+
+    def get_token_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)

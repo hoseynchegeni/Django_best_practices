@@ -1,5 +1,5 @@
 from rest_framework.generics import GenericAPIView
-
+from django.core.mail import send_mail
 from ..serializers import (
     RegistrationSerializer,
     CustomAuthTokenSerializer,
@@ -77,3 +77,15 @@ class ChangePasswordView(GenericAPIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class TestSendMail(GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        send_mail(
+            'subject here',
+            'Here is the message',
+            'from@test.com',
+            ['to@test.com'],
+            fail_silently= False
+        )
+        return Response('Email sent')

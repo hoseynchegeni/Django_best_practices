@@ -4,6 +4,7 @@ from ..views import (
     CustomAuthToken,
     CustomDiscardAuthToken,
     ChangePasswordView,
+    TestSendMail,
 )
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -13,6 +14,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("registration/", RegistrationApiView.as_view(), name="register"),
+    path('test-email/', TestSendMail.as_view(),name= 'test-email'),
     path("token/login/", CustomAuthToken.as_view(), name="token-login"),
     path(
         "token/logout/",

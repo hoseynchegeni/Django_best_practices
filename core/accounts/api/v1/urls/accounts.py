@@ -5,6 +5,7 @@ from ..views import (
     CustomDiscardAuthToken,
     ChangePasswordView,
     TestSendMail,
+    ActivationApiView
 )
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -21,6 +22,7 @@ urlpatterns = [
         CustomDiscardAuthToken.as_view(),
         name="token-discard",
     ),
+    path('activation/confirm/<str:token>',ActivationApiView.as_view(), name= 'activation'),
     path(
         "change-password/",
         ChangePasswordView.as_view(),

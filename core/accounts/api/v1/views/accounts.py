@@ -1,5 +1,4 @@
 from rest_framework.generics import GenericAPIView
-from django.core.mail import send_mail
 from ..serializers import (
     RegistrationSerializer,
     CustomAuthTokenSerializer,
@@ -12,7 +11,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
-from ....models import Profile
+from mail_templated import send_mail
 
 
 User = get_user_model()
@@ -81,11 +80,5 @@ class ChangePasswordView(GenericAPIView):
 
 class TestSendMail(GenericAPIView):
     def get(self, request, *args, **kwargs):
-        send_mail(
-            'subject here',
-            'Here is the message',
-            'from@test.com',
-            ['to@test.com'],
-            fail_silently= False
-        )
+        send_mail('email/hello.tpl', {'name':'hoseyn'},'admin@admin.com', ['hoseyn@admain.com'])
         return Response('Email sent')

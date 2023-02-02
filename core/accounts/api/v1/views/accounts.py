@@ -3,6 +3,7 @@ from ..serializers import (
     RegistrationSerializer,
     CustomAuthTokenSerializer,
     ChangePasswordSerializer,
+    ActivationResendSerializer,
 )
 from rest_framework import status
 from rest_framework.response import Response
@@ -133,20 +134,18 @@ class ActivationApiView(GenericAPIView):
         return Response({'detail':'Your account have been verified and activated successfully'})
     
 
-class ActivationResendApiView(APIView):
+class ActivationResendApiView(GenericAPIView):
+    serializer_class = ActivationResendSerializer
     def post(self, request, *args, **kwargs):
-        email = request.data.get('email')
-        if email:
-            data = {"email": email}
-            user_obj = get_object_or_404(User, email=email)
-            token = self.get_token_for_user(user_obj)
-            email_obj = EmailMessage(
-                "email/activation_email.tpl",
-                {"token": token},
-                "admin@admin.com",
-                to=[email],
-            )
-            EmailThread(email_obj).start()
-            return Response({'Details':'User activation resend successfully'}, status= status.HTTP_200_OK)
-        else:
-            return Response({'Details':'Invalid Request'}, status= status.HTTP_400_BAD_REQUEST)
+            serializer =ActivationResendSerializer(data= request.data)
+            if serializer.is_valid(raise_exception= True):
+                user_obj = serializer.validate['user']
+                token = self.get_token_for_user(user_obj)
+                email_obj = EmailMessage("email/activation_email.tpl",{"token": token},"admin@admin.com",to=[user_obj.email],)
+                EmailThread(email_obj).start()
+                return Response({'Details':'User activation resend successfully'}, status= status.HTTP_200_OK)
+
+
+    def get_token_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)

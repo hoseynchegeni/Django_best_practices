@@ -7,6 +7,6 @@ Account Activation
 
 {%block html%}
 
-http://127.0.0.1:8000/accounts/profile/api/v1/activation/confirm/{{token}}
+<a href = "http://127.0.0.1:8000/accounts/api/v1/activation/confirm/{{token}}">Account Activation</a>
 
 {%endblock%}

@@ -6,6 +6,7 @@ from ..views import (
     ChangePasswordView,
     TestSendMail,
     ActivationApiView,
+    ActivationResendApiView,
 )
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -23,6 +24,9 @@ urlpatterns = [
         name="token-discard",
     ),
     path(
+        "activation/resend/", ActivationResendApiView.as_view(), name="activation-resend"
+    ),
+        path(
         "activation/confirm/<str:token>", ActivationApiView.as_view(), name="activation"
     ),
     path(

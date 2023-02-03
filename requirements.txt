@@ -11,7 +11,7 @@ markdown
 django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
-
+djoser
 #Deployment Modules
 
 # Refactoring and tests

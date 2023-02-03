@@ -24,9 +24,11 @@ urlpatterns = [
         name="token-discard",
     ),
     path(
-        "activation/resend/", ActivationResendApiView.as_view(), name="activation-resend"
+        "activation/resend/",
+        ActivationResendApiView.as_view(),
+        name="activation-resend",
     ),
-        path(
+    path(
         "activation/confirm/<str:token>", ActivationApiView.as_view(), name="activation"
     ),
     path(

@@ -9,7 +9,7 @@
 <body>
     {%for i in posts%}
     <div>
-      <a href="{% url 'blog:PostDetail' pk=i.id %}">  <h2>{{i.title}}</h2></a>
+      <a href="{% url 'post:PostDetail' pk=i.id %}">  <h2>{{i.title}}</h2></a>
     </div>
     {%endfor%}
 

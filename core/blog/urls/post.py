@@ -9,6 +9,7 @@ from ..views import (
     PostDeleteView,
 )
 
+app_name = 'post'
 
 urlpatterns = [
     path("", indexView.as_view(), name="ClassBasedView"),

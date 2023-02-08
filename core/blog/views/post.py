@@ -43,7 +43,7 @@ class PostList(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     context_object_name = "posts"
 
 
-class PostDetailView(LoginRequiredMixin,DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
 

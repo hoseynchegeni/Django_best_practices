@@ -19,6 +19,7 @@ black
 flake8
 pytest
 pytest-django
+Faker
 
 # Email third party modules
 

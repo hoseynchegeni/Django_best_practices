@@ -4,6 +4,8 @@ django >3.2, <3.3
 python-decouple
 Pillow
 djangorestframework
+djoser
+django-cors-headers
 
 
 #Third Party Modules
@@ -11,7 +13,7 @@ markdown
 django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
-djoser
+
 #Deployment Modules
 
 # Refactoring and tests

@@ -38,7 +38,7 @@ class PostList(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     # def get_queryset(self):
     #     posts = Post.objects.filter(status = True)
     #     return posts
-    paginate_by = 5
+    paginate_by = 10
     # ordering = '-title'
     context_object_name = "posts"
 
@@ -66,3 +66,8 @@ class PostEditView(LoginRequiredMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = "/blog/post/"
+
+
+
+class PostListAPiView(TemplateView):
+    template_name = 'blog/post_list_api.html'

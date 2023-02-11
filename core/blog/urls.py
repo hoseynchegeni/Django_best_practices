@@ -7,6 +7,7 @@ from .views import (
     PostCreate,
     PostEditView,
     PostDeleteView,
+    PostListAPiView
 )
 
 app_name = "post"
@@ -18,6 +19,7 @@ urlpatterns = [
         RedirectView.as_view(pattern_name="blog:ClassBasedView"),
     ),
     path("post/", PostList.as_view(), name="PostList"),
+    path("post/api/", PostListAPiView.as_view(), name="PostListApi"),
     path("post/<int:pk>/", PostDetailView.as_view(), name="PostDetail"),
     path("create/", PostCreate.as_view(), name="create"),
     path("post/<int:pk>/edit/", PostEditView.as_view(), name="edit"),

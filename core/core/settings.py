@@ -181,7 +181,7 @@ EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500",
+     "http://127.0.0.1:5500",
 ]
 
 # if you want to have a genral api and everyone has an acces to your api use following line

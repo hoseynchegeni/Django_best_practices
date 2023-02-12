@@ -184,6 +184,6 @@ CORS_ALLOWED_ORIGINS = [
      "http://127.0.0.1:5500",
 ]
 
-# if you want to have a genral api and everyone has an acces to your api use following line
+# if you want to have a general api and everyone has an access to your api use following line
 
-# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True 

@@ -5,6 +5,7 @@ services:
   redis:
     container_name: redis
     image: redis
+    restart : always
     ports:
       - 6379:6379
     command: redis-server --save 60 1 --loglevel warning
@@ -19,19 +20,17 @@ services:
       - "8000:8000"
     # environment:
     #   - name=value
-  master:
-    image: locustio/locust
-    ports:
-     - "8089:8089"
-    volumes:
-      - ./core/locust:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --master -H http://backend:8000
-  
+    depends_on:
+      - redis
   worker:
-    image: locustio/locust
+    build: .
+    command: celery -A core worker --loglevel=info
     volumes:
-      - ./core/locust:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --worker --master-host master
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+
 
   smtp4dev:
       image: rnwood/smtp4dev:v3

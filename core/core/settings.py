@@ -187,3 +187,7 @@ CORS_ALLOWED_ORIGINS = [
 # if you want to have a general api and everyone has an access to your api use following line
 
 # CORS_ALLOW_ALL_ORIGINS = True 
+
+
+# Celery Configuration Options
+CELERY_BROKER_URL = "redis://redis:6379/1"

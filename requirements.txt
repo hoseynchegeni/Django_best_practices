@@ -26,3 +26,8 @@ Faker
 # Email third party modules
 
 django_mail_templated
+
+
+# Background  proccess and chache
+celery
+Redis

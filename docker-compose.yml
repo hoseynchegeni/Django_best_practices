@@ -20,7 +20,7 @@ services:
       - "8000:8000"
     # environment:
     #   - name=value
-    depends_on:
+    depends_on: 
       - redis
   worker:
     build: .

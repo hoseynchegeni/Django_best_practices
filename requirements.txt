@@ -31,3 +31,4 @@ django_mail_templated
 # Background  proccess and chache
 celery
 Redis
+django-Redis

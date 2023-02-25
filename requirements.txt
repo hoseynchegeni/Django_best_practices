@@ -15,7 +15,7 @@ drf-yasg[validation]
 djangorestframework-simplejwt
 
 #Deployment Modules
-
+gunicorn
 # Refactoring and tests
 black
 flake8
@@ -24,9 +24,7 @@ pytest-django
 Faker
 
 # Email third party modules
-
 django_mail_templated
-
 
 # Background  proccess and chache
 celery
